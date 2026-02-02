@@ -7,6 +7,7 @@ val users = listOf(
     User("Han", 35)
 )
 
+fun User.isAdult(): Boolean = age >= 20
 fun main() {
     /* 名前の頭文字をキーにしてUserをマップ化 */
     val mapByFirst = users.associateBy { it.name.first() }
