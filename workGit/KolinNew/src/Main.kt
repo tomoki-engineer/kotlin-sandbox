@@ -26,4 +26,19 @@ fun main() {
     val (adults, minors) = users.partition {it.age >= 20}
     println("大人：$adults")
     println("未成年：$minors")
+
+    /*総人数 */
+    val totalPeopleCount = users.size
+    println("総人数：$totalPeopleCount")
+
+    /*平均年齢 */
+    val averageAge = users.map{it.age}.average()
+    println("平均年齢：$averageAge")
+
+    /*最年長 */
+    val oldestPerson = users.maxByOrNull{it.age}
+    println("最年長：${oldestPerson?.name} (${oldestPerson?.age})")
+    /*未成年カウント */
+    val minorCount = users.count{ it.age < 20 }
+    println("未成年人数：$minorCount")
 }
