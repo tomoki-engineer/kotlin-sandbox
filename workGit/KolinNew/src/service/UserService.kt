@@ -4,6 +4,8 @@ import model.User
 import users
 
 object UserService {
+
+
     fun printAdultsAndMinors(users: List<User>) {
         val (adults, minors) = users.partition { it.age >= 20 }
 
@@ -16,6 +18,33 @@ object UserService {
             .forEach { println("${it.age}歳: ${it.name}") }
 
 
+    }
+
+    fun userMapFunction(){
+        /* 名前→年齢のMap作成*/
+        val nameToAgeMap = users.associate { user ->
+            user.name to user.age
+        }
+
+        println(nameToAgeMap)
+
+        /* 最年長だけMapする*/
+        val oldestMap = users
+            .maxByOrNull { it.age }
+            ?.let { user ->
+                mapOf(user.name to user.age)
+            }
+        println(oldestMap)
+
+        /*年齢 →人数の Map*/
+        val ageToPeopleCountMap = users
+            .groupBy { it.age }.toSortedMap().mapValues { it.value.size }
+        println(ageToPeopleCountMap)
+
+        //年齢 → 名前一覧（カンマ区切り）の Map
+        val ageToNameListMap = users
+            .groupBy { it.age }.toSortedMap().mapValues { it.value.joinToString(", ") {it.name} }
+        println(ageToNameListMap)
     }
 
     /*未使用ファンクション */

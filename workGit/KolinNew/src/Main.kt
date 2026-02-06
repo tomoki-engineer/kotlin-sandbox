@@ -8,28 +8,19 @@ val users = listOf(
 )
 
 fun main() {
-    /* 名前→年齢のMap作成*/
-    val nameToAgeMap = users.associate { user ->
-        user.name to user.age
-    }
 
-    println(nameToAgeMap)
+    //名前 → 未成年かどうか(Boolean)のMap
+    val nameToMinors = users.associate{it.name to (it.age<20)}
+    println(nameToMinors)
 
-    /* 最年長だけMapする*/
-    val oldestMap = users
-        .maxByOrNull { it.age }
-        ?.let { user ->
-            mapOf(user.name to user.age)
+    //大人の名前だけを、年齢順のListで作る
+    val adultsNameList = mutableListOf<String>()
+
+    users.filter { it.age >= 20 }
+        .sortedBy { it.age }.forEach {
+            user -> adultsNameList.add(user.name)
         }
-    println(oldestMap)
 
-    /*年齢 →人数の Map*/
-    val ageToPeopleCountMap = users
-        .groupBy { it.age }.toSortedMap().mapValues { it.value.size }
-    println(ageToPeopleCountMap)
+    println(adultsNameList)
 
-    //年齢 → 名前一覧（カンマ区切り）の Map
-    val ageToNameListMap = users
-        .groupBy { it.age }.toSortedMap().mapValues { it.value.joinToString(", ") {it.name} }
-    println(ageToNameListMap)
 }
