@@ -105,5 +105,24 @@ object UserService {
             .forEach { (age, group) ->
                 val names = group.joinToString(", ") { it.name }
                 println("${age}歳 (${group.size}人): $names") }
+
+
+        // 大人/未成年別 Map<User>
+        val adultsAndMinorsMap: Map<Boolean,List<User>> = users.groupBy { it.age >= 20 }
+        println(adultsAndMinorsMap)
+
+        // 大人／未成年別 Map、年齢順に名前リスト
+        val adultsAndMinorsNames: Map<Boolean,List<String>> = users
+            .groupBy{it.age>=20}
+            .mapValues { entry -> entry.value.sortedBy { it.age }.map{it.name} }
+
+        /* 年齢→未成年フラグList  */
+        val ageToMinorFlags: Map<Int, List<Boolean>> = users
+            .groupBy { it.age }
+            .mapValues{entry ->
+                entry.value.map{it.age < 20}
+            }
+
+        println(ageToMinorFlags)
     }
 }
