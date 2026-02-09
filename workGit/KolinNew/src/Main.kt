@@ -8,16 +8,28 @@ val users = listOf(
 )
 
 fun main() {
+    val ageToNames = users
+        .groupBy {it.age}
+        .mapValues { entry ->
+            entry.value.map{it.name}
+        }
 
+    println(ageToNames)
 
-    // 年齢 → (総人数, 未成年人数)
-    val ageStats: Map<Int, Pair<Int,Int>> = users
+    val ageStats = users
         .groupBy { it.age }
-        .mapValues{entry ->
+        .mapValues { entry ->
             val total = entry.value.size
-            val minors = entry.value.count{it.age < 20}
-            total to minors
+            val minor = entry.value.count{it.age < 20}
+            total to minor
         }
 
     println(ageStats)
+
+    val adultNames = users
+        .filter { it.age >= 20 }
+        .sortedBy { it.age }
+        .map{it.name}
+
+    println(adultNames)
 }
