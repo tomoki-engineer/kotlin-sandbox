@@ -8,28 +8,19 @@ val users = listOf(
 )
 
 fun main() {
-    val ageToNames = users
-        .groupBy {it.age}
-        .mapValues { entry ->
-            entry.value.map{it.name}
-        }
+    /*　未成年と大人別の名前List */
+    val adultsAndMinors: Map<Boolean, List<String>> = users
+        .groupBy{ it.age >= 20 }
+        .mapValues{ entry -> entry.value.sortedBy { it.age }.map{it.name}}
 
-    println(ageToNames)
+    println(adultsAndMinors)
 
-    val ageStats = users
-        .groupBy { it.age }
-        .mapValues { entry ->
-            val total = entry.value.size
-            val minor = entry.value.count{it.age < 20}
-            total to minor
-        }
+    /*　名前の頭文字でMapを作る */
+    val mapByFirstLetter = users.associateBy { it.name.first() }
+    println(mapByFirstLetter)
 
-    println(ageStats)
-
-    val adultNames = users
-        .filter { it.age >= 20 }
-        .sortedBy { it.age }
-        .map{it.name}
-
-    println(adultNames)
+    /*　ネストリストを平らにする */
+    val nestedList = listOf(listOf(1,2), listOf(3,4), listOf(5))
+    val flatList = nestedList.flatMap{it}
+    println(flatList)
 }
