@@ -1,3 +1,4 @@
+import model.Employee
 import model.User
 
 val users = listOf(
@@ -7,20 +8,34 @@ val users = listOf(
     User("Han", 35)
 )
 
+val employees = listOf(
+    Employee("A", "Dev", 500, 31),
+    Employee("B", "Dev", 600, 48),
+    Employee("C", "HR", 400, 19),
+    Employee("D", "HR", 450,28),
+    Employee("E", "Dev", 700, 56)
+)
+
 fun main() {
-    /*　未成年と大人別の名前List */
-    val adultsAndMinors: Map<Boolean, List<String>> = users
-        .groupBy{ it.age >= 20 }
-        .mapValues{ entry -> entry.value.sortedBy { it.age }.map{it.name}}
+    val result = listOf(1,2,3,4,5)
+        .filter{it % 2 == 1}
+        .map{it * it}
+        .take(2)
+    println(result)
 
-    println(adultsAndMinors)
 
-    /*　名前の頭文字でMapを作る */
-    val mapByFirstLetter = users.associateBy { it.name.first() }
-    println(mapByFirstLetter)
+    val adultsNameList = users.filter { it.age >= 20 }.map{it.name}.joinToString(", ")
 
-    /*　ネストリストを平らにする */
-    val nestedList = listOf(listOf(1,2), listOf(3,4), listOf(5))
-    val flatList = nestedList.flatMap{it}
-    println(flatList)
+    println(adultsNameList)
+
+    val employeeOrderByDescAverage = employees.groupBy{it.department}
+        .mapValues {entry ->  entry.value.map{it.age}.average()}.toList().sortedByDescending { it.second }
+
+    println(employeeOrderByDescAverage)
+
+    for (i in 0..255) {
+        // "%08d"で8桁にして、toString(2)で2進数に変換
+        val binary = i.toString(2).padStart(8, '0')
+        println("$i: $binary")
+    }
 }

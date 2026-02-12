@@ -1,5 +1,6 @@
 package service
 
+import employees
 import model.User
 import users
 
@@ -124,6 +125,18 @@ object UserService {
             }
 
         println(ageToMinorFlags)
+
+        /*　平均500以上の年収の従業員 */
+        val employeeAvgSalary500More = employees.groupBy { it.department }.mapValues { depart ->
+            depart.value.map{it.salary}.average()
+        }
+            .filter { avg -> avg.value >= 500 }
+        println(employeeAvgSalary500More)
+
+        val maxSalaryByDepart = employees.groupBy{it.department}
+            .mapValues {it.value.maxOf{it.salary}}
+
+        println(maxSalaryByDepart)
     }
 
     fun ageStatus(){
@@ -137,6 +150,13 @@ object UserService {
             }
 
         println(ageStats)
+    }
+
+    fun flatList(){
+        /*　ネストリストを平らにする */
+        val nestedList = listOf(listOf(1,2), listOf(3,4), listOf(5))
+        val flatList = nestedList.flatMap{it}
+        println(flatList)
     }
 
 
