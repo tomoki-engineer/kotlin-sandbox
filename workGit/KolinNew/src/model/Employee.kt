@@ -6,3 +6,9 @@ data class Employee(
     val salary: Int,
     val age: Int
 )
+
+data class DepartmentStats(
+    val avgAge: Double,
+    val maxSalary: Int,
+    val count: Int
+)

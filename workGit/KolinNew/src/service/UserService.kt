@@ -137,6 +137,28 @@ object UserService {
             .mapValues {it.value.maxOf{it.salary}}
 
         println(maxSalaryByDepart)
+
+        val result = listOf(1,2,3,4,5)
+            .filter{it % 2 == 1}
+            .map{it * it}
+            .take(2)
+        println(result)
+
+
+        val adultsNameList = users.filter { it.age >= 20 }.map{it.name}.joinToString(", ")
+
+        println(adultsNameList)
+
+        val employeeOrderByDescAverage = employees.groupBy{it.department}
+            .mapValues {entry ->  entry.value.map{it.age}.average()}.toList().sortedByDescending { it.second }
+
+        println(employeeOrderByDescAverage)
+
+        for (i in 0..255) {
+            // "%08d"で8桁にして、toString(2)で2進数に変換
+            val binary = i.toString(2).padStart(8, '0')
+            println("$i: $binary")
+        }
     }
 
     fun ageStatus(){
