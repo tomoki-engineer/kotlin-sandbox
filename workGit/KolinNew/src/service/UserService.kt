@@ -1,6 +1,7 @@
 package service
 
 import employees
+import model.DepartmentStats
 import model.User
 import users
 
@@ -179,6 +180,29 @@ object UserService {
         val nestedList = listOf(listOf(1,2), listOf(3,4), listOf(5))
         val flatList = nestedList.flatMap{it}
         println(flatList)
+    }
+
+    fun tripleList(){
+        val tripleListSort = employees.groupBy{it.department}
+            .mapValues { entry ->
+                val average = entry.value.map{it.age}.average()
+                val maxSalary = entry.value.map{it.salary}.max()
+                val peopleCount = entry.value.size
+                Triple(average , maxSalary , peopleCount)
+            }.toList().sortedByDescending { it.second.second }
+        println(tripleListSort)
+    }
+
+    fun avgAgeSort(){
+        val avgAgeSort = employees.groupBy{it.department}
+            .mapValues { (_, list) ->
+                DepartmentStats(
+                    avgAge = list.map{it.age}.average(),
+                    maxSalary = list.map{it.salary}.max(),
+                    count = list.size
+                )
+            }.toList().sortedByDescending { it.second.avgAge }
+        println(avgAgeSort)
     }
 
 
