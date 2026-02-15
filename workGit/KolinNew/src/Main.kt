@@ -18,31 +18,18 @@ val employees = listOf(
 )
 
 fun main() {
+    val names = listOf("Vador", "Luke", "Leia")
+    val salaries = listOf(900, 500, 600)
 
-    val employee = Employee("Vador", "Dev", 900, 31)
+    //名前と給与をペアに
+    val paired = names.zip(salaries)
+    println(paired)
 
-    // apply　→　自分自身に設定
-    val updateEmployee = employee.apply {
-        age += 1 /* 年齢アップ */
-        salary += 100 /* 給料アップ */
-    }
+    val (unzippedNames, unzippedSalaries) = paired.unzip()
+    println(unzippedNames)
+    println(unzippedSalaries)
 
-    println("After apply: $updateEmployee")
-
-    /* also → 副作用 */
-    updateEmployee.also {
-        println("Logging employee info $it") /*　副作用ログ */
-    }
-
-    /* let → 値を受け取って別の型に変換 */
-    val description = updateEmployee.let {
-        "Employee: ${it.name}, Age: ${it.age}, Salary: ${it.salary}"
-    }
-
-    /* run → オブジェクトスコープで処理して結果を返す */
-    val summary = updateEmployee.run{
-        "Summary →　Name: $name, Age + Salary: ${age + salary} " }
-
-
-
+    val (highSalary, lowSalary) = employees.partition { it.salary >= 600 }
+    highSalary.forEach { println("${it.name}:${it.salary}" ) }
+    lowSalary.forEach { println("${it.name}:${it.salary}" ) }
 }
