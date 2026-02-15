@@ -243,5 +243,22 @@ object UserService {
             "Summary →　Name: $name, Age + Salary: ${age + salary} " }
     }
 
+    fun stuZip(){
+        val names = listOf("Vador", "Luke", "Leia")
+        val salaries = listOf(900, 500, 600)
+
+        //名前と給与をペアに
+        val paired = names.zip(salaries)
+        println(paired)
+
+        val (unzippedNames, unzippedSalaries) = paired.unzip()
+        println(unzippedNames)
+        println(unzippedSalaries)
+
+        val (highSalary, lowSalary) = employees.partition { it.salary >= 600 }
+        highSalary.forEach { println("${it.name}:${it.salary}" ) }
+        lowSalary.forEach { println("${it.name}:${it.salary}" ) }
+    }
+
 
 }

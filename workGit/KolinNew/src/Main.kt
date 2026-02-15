@@ -18,18 +18,18 @@ val employees = listOf(
 )
 
 fun main() {
-    val names = listOf("Vador", "Luke", "Leia")
-    val salaries = listOf(900, 500, 600)
+    val numbers = (1..10).toList()
 
-    //名前と給与をペアに
-    val paired = names.zip(salaries)
-    println(paired)
+    /* 3個ずつに分割 */
+    val chunks = numbers.chunked(3)
+    println(chunks)
 
-    val (unzippedNames, unzippedSalaries) = paired.unzip()
-    println(unzippedNames)
-    println(unzippedSalaries)
+    val numbers2 = (1..5).toList()
 
-    val (highSalary, lowSalary) = employees.partition { it.salary >= 600 }
-    highSalary.forEach { println("${it.name}:${it.salary}" ) }
-    lowSalary.forEach { println("${it.name}:${it.salary}" ) }
+    /* 3つの連続要素でウインドウ作成 */
+    val windows = numbers2.windowed(size = 3, step = 1)
+    println(windows)
+
+    val average = numbers2.average()
+    println(average)
 }
