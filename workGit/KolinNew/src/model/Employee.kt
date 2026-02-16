@@ -7,6 +7,12 @@ data class Employee(
     var age: Int
 )
 
+data class PublicEmployee(
+    var name: String,
+    var age: Int?,
+    var salary: Int
+)
+
 data class DepartmentStats(
     val avgAge: Double,
     val maxSalary: Int,

@@ -1,5 +1,6 @@
 import model.DepartmentStats
 import model.Employee
+import model.PublicEmployee
 import model.User
 
 val users = listOf(
@@ -14,22 +15,27 @@ val employees = listOf(
     Employee("B", "Dev", 600, 48),
     Employee("C", "HR", 400, 19),
     Employee("D", "HR", 450,28),
-    Employee("E", "Dev", 700, 56)
+    Employee("E", "Dev", 700, 56),
 )
 
 fun main() {
-    val numbers = (1..10).toList()
+    val employees = listOf(
+        PublicEmployee("Vader", 31, 900),
+        PublicEmployee("Luke", null, 500),
+        PublicEmployee("Leia", 19, 600),
+        PublicEmployee("Han", null, 700)
+    )
 
-    /* 3個ずつに分割 */
-    val chunks = numbers.chunked(3)
-    println(chunks)
 
-    val numbers2 = (1..5).toList()
 
-    /* 3つの連続要素でウインドウ作成 */
-    val windows = numbers2.windowed(size = 3, step = 1)
-    println(windows)
+    /* 年齢がnullじゃない*/
+    val ageList = employees.mapNotNull{it.age}
+    println(ageList)
 
-    val average = numbers2.average()
-    println(average)
+    /* 年齢がnullじゃない人の名前だけ*/
+    val nameList = employees.mapNotNull{
+        emp -> emp.age?.let{emp.name}
+    }
+
+    println(nameList)
 }

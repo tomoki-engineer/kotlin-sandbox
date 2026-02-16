@@ -260,5 +260,22 @@ object UserService {
         lowSalary.forEach { println("${it.name}:${it.salary}" ) }
     }
 
+    fun chunksFunction(){
+        val numbers = (1..10).toList()
+
+        /* 3個ずつに分割 */
+        val chunks = numbers.chunked(3)
+        println(chunks)
+
+        val numbers2 = (1..5).toList()
+
+        /* 3つの連続要素でウインドウ作成 */
+        val windows = numbers2.windowed(size = 3, step = 1)
+        println(windows)
+
+        val average = numbers2.average()
+        println(average)
+    }
+
 
 }
