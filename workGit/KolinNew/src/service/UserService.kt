@@ -161,6 +161,16 @@ object UserService {
             val binary = i.toString(2).padStart(8, '0')
             println("$i: $binary")
         }
+
+        val highSalaryByDepartment = employees
+            .groupBy{it.department}
+            .mapValues { (_, list) ->
+                list.filter { it.salary >= 700 }
+                    .sortedByDescending { it.salary }
+                    .map { it.name }
+            }
+
+        println(highSalaryByDepartment)
     }
 
     fun ageStatus(){
