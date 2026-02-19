@@ -33,24 +33,13 @@ val publicEmployees = listOf(
 )
 
 fun main() {
-    val avgAgeByDepart = employees
-        .groupBy { it.department }
-        .mapValues { emp ->
+    val result = employees.groupBy { it.department }
+        .map{
+            emp ->
             val departName = emp.key
-            val avgAge = emp.value.map{it.age}.average()
-            val count = emp.value.size
-            Triple(departName, avgAge, count)
-        }.toList().sortedByDescending { it.second.second }
-
-
-    println(avgAgeByDepart)
-
-    val emp30Over = employees
-        .groupBy { it.department }
-        .mapValues{(_, list) ->
-            list.filter{it.age >= 30}
-                .sumOf { it.salary }
+            val avgSalary = emp.value.filter { it.age >= 25 }.map{it.salary}.average()
+            val avgOverSalaryName = emp.value.filter { it.age >= 25 && it.salary > avgSalary }.map{it.name}
+            departName to avgOverSalaryName
         }
-
-    println(emp30Over)
+    println(result)
 }
