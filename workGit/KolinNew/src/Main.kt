@@ -2,6 +2,7 @@ import model.DepartmentStats
 import model.Employee
 import model.PublicEmployee
 import model.User
+import service.EmployeeService
 import kotlin.collections.sortedBy
 
 val users = listOf(
@@ -32,14 +33,20 @@ val publicEmployees = listOf(
     PublicEmployee("Kenobi", 45, 800)
 )
 
+fun List<Employee>.highEarnersByDepartment(): Map<String, List<String>> {
+    val highNameAry = this.groupBy{it.department}.mapValues { (_,list) ->
+        val ageOverEmployee = list.filter { it.age >= 30 }
+
+        if(ageOverEmployee.isEmpty()) return@mapValues emptyList()
+        val avgSalary = ageOverEmployee.map { it.salary }.average()
+        val nameList = ageOverEmployee.filter { it.salary > avgSalary }.map{it.name}
+        nameList
+    }
+    return highNameAry
+}
+
 fun main() {
-    val result = employees.groupBy { it.department }
-        .map{
-            emp ->
-            val departName = emp.key
-            val avgSalary = emp.value.filter { it.age >= 25 }.map{it.salary}.average()
-            val avgOverSalaryName = emp.value.filter { it.age >= 25 && it.salary > avgSalary }.map{it.name}
-            departName to avgOverSalaryName
-        }
+    val result = employees.highEarnersByDepartment()
+
     println(result)
 }
