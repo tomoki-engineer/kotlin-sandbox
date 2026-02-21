@@ -33,9 +33,9 @@ val publicEmployees = listOf(
     PublicEmployee("Kenobi", 45, 800)
 )
 
-fun List<Employee>.highEarnersByDepartment(): Map<String, List<String>> {
+fun List<Employee>.highEarnersByDepartment(minAge: Int): Map<String, List<String>> {
     val highNameAry = this.groupBy{it.department}.mapValues { (_,list) ->
-        val ageOverEmployee = list.filter { it.age >= 30 }
+        val ageOverEmployee = list.filter { it.age >= minAge }
 
         if(ageOverEmployee.isEmpty()) return@mapValues emptyList()
         val avgSalary = ageOverEmployee.map { it.salary }.average()
@@ -46,7 +46,7 @@ fun List<Employee>.highEarnersByDepartment(): Map<String, List<String>> {
 }
 
 fun main() {
-    val result = employees.highEarnersByDepartment()
+    val result = employees.highEarnersByDepartment(30)
 
     println(result)
 }
