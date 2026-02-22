@@ -16,5 +16,5 @@ data class PublicEmployee(
 data class DepartmentStats(
     val avgAge: Double,
     val maxSalary: Int,
-    val count: Int
+    val employeeNames: List<String>
 )

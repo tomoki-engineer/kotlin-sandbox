@@ -204,54 +204,6 @@ object UserService {
         println(tripleListSort)
     }
 
-    fun avgAgeSort(){
-        val avgAgeSort = employees.groupBy{it.department}
-            .mapValues { (_, list) ->
-                DepartmentStats(
-                    avgAge = list.map{it.age}.average(),
-                    maxSalary = list.map{it.salary}.max(),
-                    count = list.size
-                )
-            }.toList().sortedByDescending { it.second.avgAge }
-        println(avgAgeSort)
-    }
-
-    fun fourFunc(){
-
-        val employee = Employee("Vador", "Dev", 900, 31)
-        val avgAgeSort = employees.groupBy{it.department}
-            .mapValues { (_, list) ->
-                DepartmentStats(
-                    avgAge = list.map{it.age}.average(),
-                    maxSalary = list.map{it.salary}.max(),
-                    count = list.size
-                )
-            }.toList().sortedByDescending { it.second.avgAge }
-        println(avgAgeSort)
-
-
-        // apply　→　自分自身に設定
-        val updateEmployee = employee.apply {
-            age += 1 /* 年齢アップ */
-            salary += 100 /* 給料アップ */
-        }
-
-        println("After apply: $updateEmployee")
-
-        /* also → 副作用 */
-        updateEmployee.also {
-            println("Logging employee info $it") /*　副作用ログ */
-        }
-
-        /* let → 値を受け取って別の型に変換 */
-        val description = updateEmployee.let {
-            "Employee: ${it.name}, Age: ${it.age}, Salary: ${it.salary}"
-        }
-
-        /* run → オブジェクトスコープで処理して結果を返す */
-        val summary = updateEmployee.run{
-            "Summary →　Name: $name, Age + Salary: ${age + salary} " }
-    }
 
     fun stuZip(){
         val names = listOf("Vador", "Luke", "Leia")
