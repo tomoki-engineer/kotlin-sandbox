@@ -33,25 +33,26 @@ val publicEmployees = listOf(
     PublicEmployee("Kenobi", 45, 800)
 )
 
-fun List<Employee>.highEarnersByDepartment(minAge: Int, minSalary: Int): Map<String, DepartmentStats> {
-    val departModel = this.groupBy{it.department}.mapValues { (_,list) ->
-        val ageOverEmployee = list.filter { it.age >= minAge }
-
-        val avgAge = ageOverEmployee.map { it.age }.average()
-        val maxSalary = ageOverEmployee.maxOf { it.salary }
-        val nameList = ageOverEmployee.filter { it.salary > minSalary }.map{it.name}
+fun List<Employee>.highEarnersByDepartment(condition: (Employee) -> Boolean, topN:Int): Map<String, DepartmentStats> {
+    return this.groupBy{it.department}.mapValues { (_,list) ->
+        val filtered = list.filter (condition)
+            .sortedByDescending { it.salary }
+            .take(topN)
+        val avgAge = filtered.map { it.age }.average()
+        val maxSalary = filtered.maxOfOrNull { it.salary }?:0
+        val nameList = filtered.map{"${it.name}(${it.salary}) "}
         DepartmentStats(
             avgAge,
             maxSalary,
             nameList
         )
     }
-
-    return departModel
 }
 
 fun main() {
-    val result = employees.highEarnersByDepartment(30,700)
-
+    val result = employees.highEarnersByDepartment(
+        { it.age >= 30 && it.salary >= 700 },
+        topN = 2
+    )
     println(result)
 }
