@@ -34,7 +34,7 @@ val publicEmployees = listOf(
 )
 
 fun List<Employee>.highEarnersByDepartment(condition: (Employee) -> Boolean, topN:Int): Map<String, DepartmentStats> {
-    return this.groupBy{it.department}.mapValues { (_,list) ->
+    return this.groupBy(Employee::department).mapValues { (_,list) ->
         val filtered = list.filter (condition)
             .sortedByDescending { it.salary }
             .take(topN)
