@@ -50,7 +50,7 @@ fun List<Employee>.highEarnersByDepartment(condition: (Employee) -> Boolean, top
 }
 
 fun main() {
-    val result = employees.highEarnersByDepartment(
+    val result: Map<String, DepartmentStats> = employees.highEarnersByDepartment(
         { it.age >= 30 && it.salary >= 700 },
         topN = 2
     )
