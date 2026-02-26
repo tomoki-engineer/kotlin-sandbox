@@ -12,9 +12,3 @@ data class PublicEmployee(
     var age: Int?,
     var salary: Int
 )
-
-data class DepartmentStats(
-    val avgAge: Double,
-    val maxSalary: Int,
-    val employeeNames: List<String>
-)

@@ -1,4 +1,3 @@
-import model.DepartmentStats
 import model.Employee
 import model.PublicEmployee
 import model.User
@@ -38,15 +37,39 @@ fun List<Employee>.highEarnersByDepartment(condition: (Employee) -> Boolean, top
         val filtered = list.filter (condition)
             .sortedByDescending { it.salary }
             .take(topN)
-        val avgAge = filtered.map { it.age }.average()
-        val maxSalary = filtered.maxOfOrNull { it.salary }?:0
-        val nameList = filtered.map{"${it.name}(${it.salary}) "}
-        DepartmentStats(
-            avgAge,
-            maxSalary,
-            nameList
+
+        filtered.agregateStats()
+    }
+}
+
+data class DepartmentStats(
+    val avgAge: Double,
+    val maxSalary: Int,
+    val employeeNames: List<String>,
+    val count: Int
+)
+
+private fun List<Employee>.agregateStats(): DepartmentStats{
+    if(this.isEmpty()) {
+        return DepartmentStats(
+            avgAge = 0.0,
+            maxSalary = 0,
+            employeeNames = emptyList(),
+            count = 0
         )
     }
+
+    val avgAge = this.map{it.age}.average()
+    val maxSalary = this.maxOf{it.salary}
+    val employeeNames = this.map{"${it.name}(${it.salary})"}
+    val count = this.size
+
+    return DepartmentStats(
+        avgAge,
+        maxSalary,
+        employeeNames,
+        count
+    )
 }
 
 fun main() {

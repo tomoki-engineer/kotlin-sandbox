@@ -1,7 +1,6 @@
 package service
 
 import employees
-import model.DepartmentStats
 import model.Employee
 import model.User
 import users
