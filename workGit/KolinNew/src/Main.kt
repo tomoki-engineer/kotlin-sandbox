@@ -72,18 +72,23 @@ private fun List<Employee>.agregateStats(): DepartmentStats{
     )
 }
 
-fun List<Employee>.countByDepartment(): Map<String, Int>{
-    return this.groupBy {it.department}
-        .mapValues {(_, list) -> list.size}
+
+fun calculateAverageSalary(
+    emp: List<Employee>,
+    filterAge: Int
+):Map<String, Double>{
+    val calcAverage = emp.groupBy{it.department}.mapValues { (_, list) ->
+        list.filter { it.age >= filterAge }.map { it.salary }.average()
+    }
+
+    return calcAverage
 }
 
+
+
 fun main() {
-    val result: Map<String, DepartmentStats> = employees.highEarnersByDepartment(
-        { it.age >= 30 && it.salary >= 700 },
-        topN = 2
-    )
+    val result = calculateAverageSalary(employees, 20)
+
     println(result)
 
-    val countResult = employees.countByDepartment()
-    println(countResult)
 }
