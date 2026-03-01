@@ -78,7 +78,11 @@ fun calculateAverageSalary(
     filterAge: Int
 ):Map<String, Double>{
     val calcAverage = emp.groupBy{it.department}.mapValues { (_, list) ->
-        list.filter { it.age >= filterAge }.map { it.salary }.average()
+        list
+            .asSequence()
+            .filter { it.age >= filterAge }
+            .map { it.salary }
+            .average()
     }
 
     return calcAverage
