@@ -88,11 +88,27 @@ fun calculateAverageSalary(
     return calcAverage
 }
 
+fun <K,R> List<Employee>.aggregateByDepartment(
+    keySelector: (Employee) -> K,
+    operation: (List<Employee>) -> R
+): Map<K, R> {
+    return this
+        .groupBy { keySelector(it) }
+        .mapValues{(_, list) ->
+            operation(list)
+        }
+}
+
 
 
 fun main() {
-    val result = calculateAverageSalary(employees, 20)
+    val avgSalary = employees.aggregateByDepartment(
+        keySelector = { it.department},
+        operation =  {list -> list.map{it.salary}.average()}
+    )
 
-    println(result)
-
+    val countByAge = employees.aggregateByDepartment(
+        keySelector = {it.age},
+        operation = {list -> list.size}
+    )
 }
