@@ -99,6 +99,10 @@ fun <K,R> List<Employee>.aggregateByDepartment(
         }
 }
 
+fun plusCalc(param1 :Int, param2 :Int) : Int{
+    return (param1 + param2)
+}
+
 
 
 fun main() {
