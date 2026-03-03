@@ -103,6 +103,12 @@ fun plusCalc(param1 :Int, param2 :Int) : Int{
     return (param1 + param2)
 }
 
+fun minusCalc(param1 :Int, param2 :Int): Int{
+    return (param1 - param2)
+}
+
+
+
 
 
 fun main() {
